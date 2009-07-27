@@ -92,7 +92,7 @@ module ObjectDaddy
       return if exemplars_generated
       if superclass.respond_to?(:gather_exemplars)
         superclass.gather_exemplars
-        self.generators = (superclass.generators || {}).merge(self.generators).dup
+        self.generators = (superclass.generators || {}).merge(self.generators || {}).dup
       end
 
       exemplar_path.each do |raw_path|
