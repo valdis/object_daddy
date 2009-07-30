@@ -161,6 +161,12 @@ describe ObjectDaddy, 'when registering exemplars' do
     @file_name = File.join(@file_path, 'widget_exemplar.rb')
     @class.stubs(:exemplar_path).returns(@file_path)
     @class.stubs(:name).returns('Widget')
+
+    @namespace_class = Class.new(OpenStruct)
+    @namespace_class.send(:include, ObjectDaddy)
+    @file_path_for_namespace = File.join(File.dirname(__FILE__), 'tmp', 'namespace')
+    @namespace_class.stubs(:exemplar_path).returns(@file_path_for_namespace)
+    @namespace_class.stubs(:name).returns('Namespace::Widget')
   end
   
   describe 'before exemplars have been registered' do
@@ -176,6 +182,10 @@ describe ObjectDaddy, 'when registering exemplars' do
     it "should look for an exemplar for the target class, based on the class's name" do
       @class.expects(:name).returns('Widget')
       @class.gather_exemplars
+    end
+    it "should look for an exemplar for the target class, based on the class's namespace and name " do
+      @namespace_class.expects(:name).returns('Namespace::Widget')
+      @namespace_class.gather_exemplars
     end
     
     it "should register any generators found in the exemplar for the target class" do 
