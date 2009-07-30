@@ -603,7 +603,7 @@ if File.exists?("#{File.dirname(__FILE__)}/../../../../config/environment.rb")
     validates_presence_of :blotto
     validates_presence_of :name
     validates_presence_of :title, :on => :create, :message => "can't be blank"
-    validates_format_of   :title, :with => /^\d+$/
+    validates_format_of   :title, :with => /^\d+$/, :message=>"title must comply with the format /^\\d+$/"
   end
   
   class SubFrobnitz < Frobnitz
